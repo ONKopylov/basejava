@@ -5,11 +5,11 @@ import java.util.function.IntFunction;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[3];
+    Resume[] storage = new Resume[10];
     int size;
 
     void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, size - 1, null);
         size = 0;
     }
 
@@ -24,7 +24,7 @@ public class ArrayStorage {
 
     Resume get(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid == uuid){
+            if (storage[i].uuid == uuid) {
                 return storage[i];
             }
         }
@@ -33,12 +33,10 @@ public class ArrayStorage {
 
     void delete(String uuid) {
         Resume deletedElem = get(uuid);
-        int indexDeletedElem;
+        int indexDeletedElem = indexOfElem(deletedElem);
 
-        if (deletedElem != null) {
-
+        if (indexDeletedElem >= 0) {
             //Присваиваем найденному элементу нулл
-            indexDeletedElem = Arrays.asList(storage).indexOf(deletedElem);
             storage[indexDeletedElem] = null;
 
             //Изменяем размер
@@ -46,7 +44,7 @@ public class ArrayStorage {
 
             //Сдвигаем все элементы после удаленного
             for (int i = indexDeletedElem; i < size; i++) {
-                storage[i] = storage [i+1];
+                storage[i] = storage[i + 1];
             }
 
             if (size == (storage.length - 1)) {
@@ -59,11 +57,20 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-//        return new Resume[0];
-        return Arrays.copyOf(storage, storage.length);
+        return Arrays.copyOf(storage, size);
     }
 
     int size() {
         return size;
+    }
+
+    int indexOfElem(Resume elem) {
+        int indexDeletedElem = 0;
+        for (int i = 0; i < storage.length; i++) {
+            if (storage[i] == elem) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
