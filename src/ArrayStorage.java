@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.function.IntFunction;
 
 /**
  * Array based storage for Resumes
@@ -23,27 +22,26 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
-                return storage[i];
-            }
+        int indexResume = findIndex(uuid);
+        if (indexResume >= 0) {
+            return storage[indexResume];
         }
         return null;
     }
 
     void delete(String uuid) {
-        Resume deletedElem = get(uuid);
-        int indexDeletedElem = indexOfElem(deletedElem);
+        //Resume deletedResume = get(uuid);
+        int indexDeletedResume = findIndex(uuid);
 
-        if (indexDeletedElem >= 0) {
+        if (indexDeletedResume >= 0) {
             //Присваиваем найденному элементу нулл
-            storage[indexDeletedElem] = null;
+            storage[indexDeletedResume] = null;
 
             //Изменяем размер
             size--;
 
             //Сдвигаем все элементы после удаленного
-            for (int i = indexDeletedElem; i < size; i++) {
+            for (int i = indexDeletedResume; i < size; i++) {
                 storage[i] = storage[i + 1];
             }
 
@@ -64,10 +62,9 @@ public class ArrayStorage {
         return size;
     }
 
-    int indexOfElem(Resume elem) {
-        int indexDeletedElem = 0;
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] == elem) {
+    private int findIndex(String uuid) {
+        for (int i = 0; i < size - 1; i++) {
+            if (storage[i].uuid.equals(uuid)) {
                 return i;
             }
         }
