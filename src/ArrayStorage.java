@@ -25,7 +25,7 @@ public class ArrayStorage {
 
         storage[size] = r;
         size++;
-        }
+    }
 
     Resume get(String uuid) {
         int indexForGet = findIndex(uuid);
@@ -39,7 +39,7 @@ public class ArrayStorage {
         int indexForDel = findIndex(uuid);
 
         if (indexForDel >= 0) {
-             size--;
+            size--;
 
             //Сдвигаем все элементы после удаленного
             for (int i = indexForDel; i < size; i++) {
