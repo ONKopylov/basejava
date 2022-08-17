@@ -42,7 +42,7 @@ public class ArrayStorage {
             size--;
 
             //Сдвигаем все элементы после удаленного
-            for (int i = indexForDel; i < size; i++) {
+            for (int i = indexForDel; i < size - 1; i++) {
                 storage[i] = storage[i + 1];
             }
             storage[size] = null;
