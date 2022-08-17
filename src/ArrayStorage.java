@@ -39,12 +39,11 @@ public class ArrayStorage {
         int indexForDel = findIndex(uuid);
 
         if (indexForDel >= 0) {
-            size--;
-
             //Сдвигаем все элементы после удаленного
             for (int i = indexForDel; i < size - 1; i++) {
                 storage[i] = storage[i + 1];
             }
+            size--;
             storage[size] = null;
         }
     }
